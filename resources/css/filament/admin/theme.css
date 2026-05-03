@@ -1,0 +1,107 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+/* 🎯 CUSTOM CYBER CURSOR */
+body { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300fff9" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>') 12 12, auto !important; }
+a, button, input, select, textarea, .fi-sidebar-item-button, .fi-ta-row, .fi-btn { 
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23f43f5e" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 0v5M12 19v5M0 12h5M19 12h5"/></svg>') 12 12, pointer !important; 
+}
+
+/* 🌌 BACKGROUND IDENTIK DENGAN DASHBOARD (Gelap + Grid Tipis + Glow Tengah) */
+.dark .fi-body, .dark .fi-main { background-color: #030305 !important; }
+
+/* Grid Background */
+.fi-main::before {
+    content: ''; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(0, 255, 249, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 255, 249, 0.03) 1px, transparent 1px);
+}
+
+/* Breathing Glow Besar di Tengah Layar (Khas Command Center-mu) */
+.fi-main::after {
+    content: ''; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: rgba(0, 255, 249, 0.05); /* Cyan Glow Lembut */
+    filter: blur(150px); border-radius: 50%; z-index: -1; pointer-events: none;
+}
+
+/* ⚡ TOPBAR & SIDEBAR (Glassmorphism Halus) */
+.dark .fi-topbar { 
+    background-color: rgba(10, 10, 12, 0.6) !important; 
+    backdrop-filter: blur(20px) !important; 
+    border-bottom: 1px solid rgba(0, 255, 249, 0.1) !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important; 
+}
+.dark .fi-sidebar { 
+    background-color: rgba(5, 5, 5, 0.8) !important; 
+    backdrop-filter: blur(15px) !important;
+    border-right: 1px solid rgba(0, 255, 249, 0.05) !important; 
+}
+
+/* 🔥 MENU SIDEBAR AKTIF (Pill Shape menyala khas profil user) */
+.dark .fi-sidebar-item-active > a { 
+    background: rgba(0, 255, 249, 0.1) !important; 
+    border: 1px solid rgba(0, 255, 249, 0.3) !important;
+    color: #00fff9 !important;
+    border-radius: 9999px !important; /* Bentuk membulat (Pill) */
+    box-shadow: 0 0 15px rgba(0, 255, 249, 0.2) !important;
+}
+.dark .fi-sidebar-item-button:hover {
+    background: rgba(0, 255, 249, 0.05) !important;
+    border-radius: 9999px !important;
+}
+
+/* 🎛️ HUD CARDS (Identik dengan Kotak Operator_ID) */
+.dark .fi-wi-stats-overview-stat, .dark .fi-ta-ctn, .dark .fi-fo-wizard, .dark .fi-section {
+    background: rgba(10, 10, 12, 0.7) !important; /* Semi transparan */
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important; /* Border sangat tipis */
+    border-radius: 0.75rem !important; /* Sedikit rounded */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0, 255, 249, 0.02) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Tambahan Aksen Garis Cyan di kiri kartu */
+.dark .fi-wi-stats-overview-stat::before, .dark .fi-ta-ctn::before, .dark .fi-section::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: #00fff9; box-shadow: 0 0 15px #00fff9;
+}
+
+/* 🔫 TOMBOL ACTION (Identik dengan tombol Execute Lingkaran/Glow) */
+.fi-btn {
+    border-radius: 9999px !important; /* Pill Shape */
+    border: 1px solid #00fff9 !important;
+    background: rgba(0, 255, 249, 0.1) !important;
+    color: #00fff9 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 249, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+.fi-btn:hover { 
+    background: #00fff9 !important; 
+    color: #000 !important; /* Teks jadi hitam saat dihover */
+    box-shadow: 0 0 20px rgba(0, 255, 249, 0.6) !important;
+    transform: scale(1.05) !important;
+}
+
+/* 🚥 EFEK HOVER BARIS TABEL */
+.dark .fi-ta-row { transition: all 0.2s ease; border-bottom: 1px solid rgba(255,255,255,0.02) !important; }
+.dark .fi-ta-row:hover { 
+    background: rgba(0, 255, 249, 0.05) !important; 
+}
+
+/* ✨ HEADING & LOGO (Clean Cyan Glow persis seperti tulisan COMMAND CENTER) */
+.fi-header-heading, .fi-logo {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: #fff !important;
+    /* Ini rahasia glow bersihnya, tanpa pink glitch! */
+    text-shadow: 0 0 15px rgba(0, 255, 249, 0.6), 0 0 30px rgba(0, 255, 249, 0.4) !important;
+}
+
+/* Hapus Efek Glitch Teks Lama yang Jelek */
+.dark .glitch::before, .dark .glitch::after { display: none !important; }
