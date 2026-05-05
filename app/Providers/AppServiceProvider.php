@@ -20,8 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Memaksa Laravel menggunakan rute HTTPS saat berada di server production
-        if (env('APP_ENV') === 'production') {
+        // Taktik Anti-Gagal: Memaksa HTTPS aktif saat berada di server production
+        // Menggunakan $this->app->environment agar aman meskipun konfigurasi di-cache oleh server
+        if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
     }
