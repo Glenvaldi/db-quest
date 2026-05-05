@@ -11,8 +11,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl zip
 
-# 4. Enable mod_rewrite (Kembali ke mode aman bawaan image)
-RUN a2enmod rewrite
+# 4. JURUS BRUTAL ANTI-BENTROK APACHE (Hapus paksa MPM ganda, sisakan prefork)
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.load \
+    && a2enmod mpm_prefork \
+    && a2enmod rewrite
 
 # 5. Set DocumentRoot ke folder public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
@@ -37,7 +39,7 @@ RUN composer install --no-dev --optimize-autoloader
 # 11. Atur permission
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 12. JURUS PAMUNGKAS (Sudah dibersihkan dari jebakan key:generate)
+# 12. Script Start
 RUN echo '#!/bin/bash\n\
 php artisan config:clear\n\
 php artisan cache:clear\n\
