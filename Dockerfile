@@ -19,15 +19,17 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl zip
 
-# 4. Enable Apache mod_rewrite untuk Laravel
+# 4. Enable Apache mod_rewrite & Perbaiki bentrok MPM di Railway
 RUN a2enmod rewrite
+RUN a2dismod mpm_event mpm_worker || true
+RUN a2enmod mpm_prefork
 
 # 5. Ubah DocumentRoot Apache ke folder public Laravel
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# 6. Ubah port Apache agar jalan di 8080 (standar Back4app)
+# 6. Ubah port Apache agar jalan di 8080
 RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
 # 7. Set working directory
