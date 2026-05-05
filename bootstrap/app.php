@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+            // Taktik mempercayai semua perantara (Load Balancer Railway)
+            $middleware->trustProxies(at: '*');
+
             // Daftarkan satpam kita dengan nama panggilan 'check.level'
             $middleware->alias([
                 'check.level' => \App\Http\Middleware\CheckLevelAccess::class,
