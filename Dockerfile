@@ -26,20 +26,21 @@ RUN composer install --no-dev --optimize-autoloader
 # 8. Atur permission folder bootstrap
 RUN chmod -R 777 bootstrap/cache
 
-# 9. JURUS PAMUNGKAS + AUTO-BUILD STORAGE FOLDER (TERMASUK LIVEWIRE)
+# 9. SUNTIKAN STEROID: Kapasitas Upload & Pekerja Paralel
+# Menambah batas upload menjadi 50MB dan memaksa PHP bisa memproses banyak tugas sekaligus
+RUN echo "upload_max_filesize = 50M\npost_max_size = 50M\nmemory_limit = 256M" > /usr/local/etc/php/conf.d/uploads.ini
+ENV PHP_CLI_SERVER_WORKERS=5
+
+# 10. JURUS PAMUNGKAS + AUTO-BUILD STORAGE FOLDER
 RUN echo '#!/bin/bash\n\
-# Bangun ulang struktur folder di dalam Volume kosong\n\
 mkdir -p /app/storage/framework/cache/data\n\
 mkdir -p /app/storage/framework/sessions\n\
 mkdir -p /app/storage/framework/views\n\
 mkdir -p /app/storage/logs\n\
 mkdir -p /app/storage/app/public\n\
 mkdir -p /app/storage/app/livewire-tmp\n\
-# Berikan akses penuh ke folder tersebut\n\
 chmod -R 777 /app/storage\n\
-# Hancurkan symlink lama jika nyangkut\n\
 rm -rf /app/public/storage\n\
-# Jalankan perintah artisan\n\
 php artisan config:clear\n\
 php artisan cache:clear\n\
 php artisan migrate --force\n\
@@ -48,5 +49,5 @@ php artisan serve --host=0.0.0.0 --port=${PORT:-8080}' > /usr/local/bin/start-co
 
 RUN chmod +x /usr/local/bin/start-container
 
-# 10. Jalankan aplikasi
+# 11. Jalankan aplikasi
 CMD ["start-container"]
