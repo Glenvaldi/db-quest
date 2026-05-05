@@ -37,6 +37,8 @@ mkdir -p /app/storage/app/public\n\
 mkdir -p /app/storage/app/livewire-tmp\n\
 # Berikan akses penuh ke folder tersebut\n\
 chmod -R 777 /app/storage\n\
+# Hancurkan symlink lama jika nyangkut\n\
+rm -rf /app/public/storage\n\
 # Jalankan perintah artisan\n\
 php artisan config:clear\n\
 php artisan cache:clear\n\
