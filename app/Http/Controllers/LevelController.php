@@ -54,7 +54,7 @@ class LevelController extends Controller
 
     public function questsIndex() {
         $levelData = $this->getLeveLProgress();
-        return view('materials-list', compact('levelData'));
+        return view('quests-list', compact('levelData'));
     }
 
     public function profile() {
